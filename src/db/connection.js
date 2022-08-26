@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const { getLastEvents } = require('../utils/eventCache')
 
 exports.connectDB = async () => {
     try {
@@ -7,7 +6,6 @@ exports.connectDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-        await getLastEvents()
         console.log(`MongoDB connected: ${conn.connection.host}`)
     } catch (error) {
         console.error(error)

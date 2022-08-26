@@ -1,6 +1,17 @@
 const { default: axios } = require('axios')
+const AirQuality = require('../models/Quality')
 const CustomError = require('../utils/CustomError')
 const { logger } = require('../utils/logger')
+
+function formatDateToHumanReadable(dateString) {
+    return new Date(dateString).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+    })
+}
 
 exports.getAirQuality = async function ({ params }) {
     try {
@@ -43,6 +54,45 @@ exports.getAirQuality = async function ({ params }) {
         }
     } catch (error) {
         logger.error(`::: getting air quality failed with ${error}:::`)
+        throw new CustomError(
+            error.statusCode || 500,
+            error.message || 'Something went wrong'
+        )
+    }
+}
+
+exports.getMostPollutedPeriod = async function () {
+    try {
+        // we will fetch the record with the highest aqius
+        const mostPolluted = await AirQuality.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    max: { $max: '$aqius' },
+                    doc: { $first: '$$ROOT' }, // get the first doc and return the document itself
+                },
+            },
+        ])
+
+        if (mostPolluted.length == 0) {
+            return {
+                data: 'No records yet',
+            }
+        }
+
+        const { doc } = mostPolluted[0]
+        const { ts: time } = doc
+
+        return {
+            data: {
+                message: 'This is the period where Paris is the most polluted',
+                time: formatDateToHumanReadable(time),
+            },
+        }
+    } catch (error) {
+        logger.error(
+            `::: Couldn't get the most polluted period of Paris ${error}:::`
+        )
         throw new CustomError(
             error.statusCode || 500,
             error.message || 'Something went wrong'

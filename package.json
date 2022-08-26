@@ -1,0 +1,40 @@
+{
+  "name": "air-quality-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "dev": "nodemon src/server.js",
+    "test": "mocha ./src/tests --timeout 10000 --exit",
+    "commit": "cz"
+  },
+  "author": "Nathaniel Babalola",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dayjs": "^1.11.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.3",
+    "morgan": "^1.10.0",
+    "pino": "^8.4.2",
+    "pino-pretty": "^9.1.0",
+    "prisma": "^4.2.1"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

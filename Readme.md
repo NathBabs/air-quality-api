@@ -39,11 +39,12 @@ touch .env
 
 <br>
 
-Add values for `PORT` and `MONGODB_URI`
+Add values for `PORT` and `MONGODB_URI` and `IQ_API_KEY` (this is the api key of your account gotten from [https://www.iqair.com/fr/dashboard/api])
 
 ```env
 PORT=3000
 MONGODB_URI=
+IQ_API_KEY=
 ```
 
 <br>
@@ -55,11 +56,12 @@ Run the following command to get the program started
 ```bash
 npm start
 ```
+
 <br>
 
 ### Documentation
 
-Documentation for the endpoints can be viewed at 
+Documentation for the endpoints can be viewed at
 
 `http://localhost:3000/api-docs`
 

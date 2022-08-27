@@ -4,6 +4,8 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
+const swaggerUi = require('swagger-ui-express')
+const docs = require('./docs')
 const routes = require('./routes')
 
 app.use(cors())
@@ -28,5 +30,7 @@ app.use((err, req, res, next) => {
         message: message,
     })
 })
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs))
 
 module.exports = app

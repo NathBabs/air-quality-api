@@ -3,7 +3,6 @@ const { default: axios } = require('axios')
 const AirQuality = require('../models/Quality')
 const { logger } = require('../utils/logger')
 const EVERY_MINUTE = '* * * * * '
-const EVERY_TEN_SECONDS = '*/10 * * * * *'
 
 async function getAirQuality(now) {
     const parisLat = 48.856613
@@ -31,12 +30,16 @@ async function getAirQuality(now) {
     })
 
     logger.info(
-        `::: Pollution stats for Paris at ${now} are [${
-            (ts, aqius, aqicn, mainus, maincn)
-        }] :::`
+        `::: Pollution stats for Paris at ${now} are [${ts}, ${aqius}, ${aqicn}, ${mainus}, ${maincn}] :::`
     )
 }
 
-exports.fetchParisAirQuality = cron.schedule(EVERY_MINUTE, getAirQuality, {
+const fetchParisAirQuality = cron.schedule(EVERY_MINUTE, getAirQuality, {
     scheduled: false,
 })
+
+module.exports = {
+    getAirQuality,
+    fetchParisAirQuality,
+    EVERY_MINUTE,
+}

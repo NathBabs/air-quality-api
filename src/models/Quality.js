@@ -19,7 +19,8 @@ const airQualitySchema = new mongoose.Schema({
 })
 
 // set an index on aqius and aqicn, for better performance when finding
-airQualitySchema.index({ aqius: 1, aqicn: 1 })
+airQualitySchema.index({ aqius: 1 })
+airQualitySchema.index({ aqicn: 1 })
 
 const AirQuality = mongoose.model('AirQuality', airQualitySchema)
 
